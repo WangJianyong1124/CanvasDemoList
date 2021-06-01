@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>签名板案例</title>
+  <style>
+    body{
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas{
+      display: block;
+      margin: 0 auto;
+      background-color: #cbcbcb;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+      // 获取canvas元素
+      const canvas = document.querySelector("#canvas");
+
+  //    设置canvas的宽高
+      canvas.width = 800
+      canvas.height = 600
+
+  //    获取绘图上下文对象
+      const context = canvas.getContext("2d");
+
+
+  //    绑定鼠标按下事件(准备开始画)
+      canvas.onmousedown = event => {
+          //开启路径
+          context.beginPath()
+
+          //    设置起点(鼠标点击的位置)
+          context.moveTo(event.offsetX, event.offsetY)
+
+          // 绑定鼠标移动事件(正在画的时候)
+          document.onmousemove = event => {
+          //    设置连接点
+              context.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop)
+              // 描边(显示)
+              context.stroke()
+          }
+      }
+
+  //    绑定鼠标抬起事件 (画完了)
+      document.onmouseup = () => {
+          // 清除鼠标移动事件事件
+          document.onmousemove = null
+      }
+
+  </script>
+</body>
+</html>
